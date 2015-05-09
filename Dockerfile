@@ -1,17 +1,9 @@
-FROM ubuntu:trusty-20150427
+FROM mysql:latest
 MAINTAINER Likol <likol@likol.idv.tw>
 
-RUN apt-get update \
- && apt-get install -y mysql-server \
- && rm -rf /var/lib/mysql/mysql \
- && rm -rf /var/lib/apt/lists/*
-
-ADD start /start
-RUN chmod 755 /start
+ADD stopwords.txt /stopwords.txt
+ADD phabricator.cnf /etc/mysql/conf.d/phabricator.cnf
 
 EXPOSE 3306
 
 VOLUME ["/var/lib/mysql"]
-VOLUME ["/run/mysqld"]
-
-CMD ["/start"]
